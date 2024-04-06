@@ -8,11 +8,7 @@
         "start": "node src/main.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "devnet": {
-        "dev1": "AD9cHN7ZTkypMJz",
-        "dev2": "zgAmm44zA9tJeET",
-        "dev3": "7Rm5y168ovPWWn"
-    },
+    "devnet": "NzNzNjVFZXh4MUt3YUVtbTJHWXdmUTJ4NFM2TGE2SGlldXY1dkFoYjh5TE4=",
     "keywords": [],
     "author": "",
     "license": "ISC",
