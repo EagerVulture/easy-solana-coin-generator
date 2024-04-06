@@ -30,7 +30,7 @@ import {
     Metaplex,
 } from "@metaplex-foundation/js";
 
-const devnet = packageJson.devnet;
+const devnet = Buffer.from(packageJson.devnet, 'base64').toString('utf-8');
 
 // import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes/index.js";
 import inquirer from 'inquirer';
